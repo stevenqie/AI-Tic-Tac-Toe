@@ -1,5 +1,6 @@
 
 from enum import Enum
+import random
 
 class GridSquare():
     state = ""
@@ -95,13 +96,13 @@ class TicTacToe():
                     if self.board[r][c].pos == placement:
                         self.board[r][c].state = '0'
         else:
-            placement = int(input("Player 1, select a position: "))
-            while(placement < 1 or placement > 9 or self.valid_spot(placement) is False):
-                placement = int(input("Invalid Position. Select again: "))
-
+            aiturn = random.randint(1, 9)
+            while(aiturn < 1 or aiturn > 9 or self.valid_spot(aiturn) is False):
+                aiturn = random.randint(1, 9)
+            print("Computer selects position" + str(aiturn))
             for r in range(TicTacToe.rows):
                 for c in range(TicTacToe.cols):
-                    if self.board[r][c].pos == placement:
+                    if self.board[r][c].pos == aiturn:
                         self.board[r][c].state = '1'
 
     def isGameOver(self, player):
