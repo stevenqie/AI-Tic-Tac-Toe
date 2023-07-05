@@ -28,7 +28,10 @@ def tie(game_board):
             return False
     return True 
 
-def minimax(board, depth, isMaximizing):
+
+
+
+def minimax(board, isMaximizing, alpha, beta):
     #if board state is at terminal condition/end state, then just return the score
     if checkWinner(board, 0, "X"):
         return 1
@@ -43,20 +46,28 @@ def minimax(board, depth, isMaximizing):
             #if the spot is available
             if board[i] != 'X'and board[i] != 'O':
                 board[i] = 'X'
-                score = minimax(board, depth + 1, False)
+                score = minimax(board, False, alpha, beta)
                 board[i] = str(i + 1)[0]
                 bestScore = max(score, bestScore)
+                alpha = max(alpha, score)
+                #we are tyring to maximize and so if we happen to find a value that is less than what we have, we don't need to go any further 
+                if beta <= alpha:
+                    break
         #finding the best score for all the possible next turns by the ai player 
         return bestScore 
     else:
-        #now thge player needs to find the best position for it, which is the lowest score 
+        #now the player needs to find the best position for it, which is the lowest score 
         bestScore = 10
         for i in range(len(board)):
             if board[i] != 'X' and board[i] != 'O':
                 board[i] = 'O'
-                score = minimax(board, depth + 1, True)
+                score = minimax(board,True, alpha, beta)
                 board[i] = str(i + 1)[0]
                 bestScore = min(bestScore, score)
+                beta = min(beta, score)
+                #this means that white had a better option avaiable earlier on in the tree
+                if beta <= alpha:
+                    break
         return bestScore 
 
 

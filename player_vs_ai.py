@@ -101,12 +101,14 @@ class TicTacToe():
         else:
             bestScore = -10
             move = -1
+            #loop thorugh each value in the grid 
             for i in range(len(final_board)):
-                #if the spot is available
+                #if the spot is available, put your marker down on the spot
                 if final_board[i] != 'X'and final_board[i] != 'O':
                     final_board[i] = 'X'
                     #get the score for this particular move. It's false becasue the AI tried to move at board i so now you are minimizing it. 
-                    score = minimax(final_board, 0, False)
+                    score = minimax(final_board, False, -10000, 10000)
+                    #put the spot back to it's original value so you can test other options 
                     final_board[i] = str(i + 1)[0]
                     if score > bestScore: 
                         bestScore = score 
