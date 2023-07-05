@@ -99,22 +99,28 @@ class TicTacToe():
                     if self.board[r][c].pos == placement:
                         self.board[r][c].state = '0'
         else:
-            bestoutcome = -10
-            best_move = 0
-
+            bestScore = -10
+            move = -1
             for i in range(len(final_board)):
-                if final_board[i] != 'X' and final_board[i] != 'O':
+                #if the spot is available
+                if final_board[i] != 'X'and final_board[i] != 'O':
                     final_board[i] = 'X'
-                    get_move = minimax(final_board, False)
-                    final_board[i] = i
-                    if get_move > best_move:
-                        best_outcome = get_move
-                        best_move = i + 1
-            print("Computer chooses: " + str(best_move))
+                    #get the score for this particular move. It's false becasue the AI tried to move at board i so now you are minimizing it. 
+                    score = minimax(final_board, 0, False)
+                    final_board[i] = str(i + 1)[0]
+                    if score > bestScore: 
+                        bestScore = score 
+                        move = i
+            
+            print("Computer chooses position " + str(move + 1))
             for r in range(TicTacToe.rows):
                 for c in range(TicTacToe.cols):
-                    if self.board[r][c].pos != "-1" and self.board[r][c].pos == str(best_move):
-                        self.board[r][c].state = 'X'
+                    if self.board[r][c].pos == (move + 1):
+                        self.board[r][c].state = '1'
+            self.printBoard()
+
+
+
     def isGameOver(self, player):
         #check row wins 
         for r in range(TicTacToe.rows):
@@ -141,6 +147,14 @@ class TicTacToe():
             print("Player 0 wins")
         else:
             print("Tie Game")
+
+    def printBoard(self):
+        for i in range(len(self.board)):
+            for j in range(len(self.board[0])): 
+                print(str(self.board[i][j].pos) + ", " + self.board[i][j].state)
+    
+
+                    
 
 
 
